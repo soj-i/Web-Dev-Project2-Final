@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import { useRecipeBookContext } from './RecipeStepsContext';
 import { recipeStepTracker } from './cookbookSetup';
@@ -6,33 +8,44 @@ export default function RecipeSteps () {
   const { recipes, setRecipes } = useRecipeBookContext();
   const [completedSteps, setCompletedSteps] = useState<{ [key: string]: boolean }>({});
 
-  const handleCompleteCheck = (id: string) => {
-    setCompletedSteps((prev) => ({
-      ...prev,
-      [id]: !(prev[id]),
-    }));
-  };
-
-
-
-  return (
-    <ol className="pl-6 text-lg">
-      {Object.entries(recipeSteps).map(([k, v]) => {
-        const isComplete = completedSteps[k];
-        return (
-          <li key={k} className="flex items-center">
-            <label style={{ textDecoration: isComplete ? 'line-through' : 'none' }}>
-              {v}
-            </label>
-            <input
-              type="checkbox"
-              checked={isComplete}
-              onChange={() => handleCompleteCheck(k)}
-              className="ml-2"
-            />
-          </li>
-        );
-      })}
-    </ol>
-  );
+  const handleCompleteCheck = (recipeId: string, stepId: string) => {
+    const recipe = recipeStepTracker.getRecipeFromCookbook(recipeId);
+    if (recipe) {
+        recipeStepTracker.updateCheckStatus(recipe, stepId);
+        const updatedRecipes = new Map(recipes);
+        setRecipes(updatedRecipes);
+    }
 };
+
+
+
+
+return (
+    <ol className="pl-6 text-lg">
+        
+        {Array.from(recipes!.entries()).map(([recipeId, recipe]) => (
+            <li key={recipeId}>
+                <h3>{recipe.title}</h3>
+                <ul>
+                    {recipe.steps.map((step) => {
+                        const isComplete = step.isCompleted;
+                        return (
+                            <li key={step.id} className="flex items-center">
+                                <label style={{ textDecoration: isComplete ? 'line-through' : 'none' }}>
+                                    {step.value}
+                                </label>
+                                <input
+                                    type="checkbox"
+                                    checked={isComplete}
+                                    onChange={() => handleCompleteCheck(recipeId, step.id)}
+                                />
+                            </li>
+                        );
+                    })}
+                </ul>
+            </li>
+        ))}
+    </ol>
+);
+}
+
