@@ -91,8 +91,13 @@ const recipeStepTracker = { // what we want to export
     addRecipeToCookbook(recipe: Recipe){
         const newStepID = `recipe-${Math.floor(Math.random() * Date.now())}`
         cookbook.set(newStepID, recipe);
+    },
+
+    removeRecipeFromCookbook(id: string){
+        if (cookbook.has(id)){
+            cookbook.delete(id);
     }
 
 }
-
+}
 export {cookbook, recipeStepTracker};

@@ -3,23 +3,6 @@ import React, { createContext, useContext, useState, ReactNode, Dispatch, useEff
 
 import {cookbook, Recipe, RecipeStep } from './cookbookSetup';
 
-/* 
-
-
-export interface RecipeStep {
-    id: string;
-    value: string;
-    isCompleted: boolean;
-}
-
-export interface Recipe {
-    title: string;
-    steps: RecipeStep[];
-}
-
-export const cookbook: Map<string, Recipe> = new Map();
-
-*/
 
 const defaultRecipe = { 
     title: "recipe 1",
@@ -41,12 +24,14 @@ const RecipeBookContext = createContext<CookbookType>(
     }
 )
 
+
+
 export const useRecipeBookContext = () => useContext(RecipeBookContext);
 
 export const RecipeStepsContextProvider = ({ children }: { children: ReactNode }) => {
     const [recipes, setRecipes] = useState<Map<string, Recipe>>(cookbook);
  
- 
+
   return (
     <RecipeBookContext.Provider value={{ recipes, setRecipes }}>
       {children}

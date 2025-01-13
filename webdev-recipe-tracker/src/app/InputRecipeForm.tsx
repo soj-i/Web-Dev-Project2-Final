@@ -5,9 +5,9 @@ import { useRecipeBookContext } from './RecipeStepsContext';
 import { recipeStepTracker, Recipe } from './cookbookSetup';
 
 export default function InputRecipeForm() {
-    const [recipeName, setRecipeName] = useState(''); // Recipe name input
-    const [recipeStep, setRecipeStep] = useState(''); // Recipe step input
-    const [currRecipe, setCurrRecipe] = useState<Recipe | null>(null); // Current recipe being created
+    const [recipeName, setRecipeName] = useState(''); // recipe name input
+    const [recipeStep, setRecipeStep] = useState(''); // recipe step input
+    const [currRecipe, setCurrRecipe] = useState<Recipe | null>(null); // current recipe being created
 
     const { recipes, setRecipes } = useRecipeBookContext();
     const router = useRouter();
@@ -15,7 +15,7 @@ export default function InputRecipeForm() {
     useEffect(() => {
         const newRecipe = recipeStepTracker.createRecipe();
         setCurrRecipe(newRecipe);
-    }, []);
+    }, []); // runs once
 
     const handleAddStep = (e: FormEvent) => {
         e.preventDefault();
@@ -34,11 +34,11 @@ export default function InputRecipeForm() {
         e.preventDefault();
 
         if (currRecipe) {
-            currRecipe.title = recipeName; // set the recipe title
-            recipeStepTracker.addRecipeToCookbook(currRecipe); // add the recipe to the cookbook
+            currRecipe.title = recipeName; 
 
             // create a new Map object to trigger re-render
             const newRecipes = new Map(recipes);
+
             newRecipes.set(`recipe-${Math.floor(Math.random() * Date.now())}`, currRecipe);
             setRecipes(newRecipes);
 

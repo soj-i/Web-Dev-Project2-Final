@@ -1,5 +1,12 @@
-import Image from "next/image";
+"use client";
+
+
+import { useRouter } from "next/navigation";
 import Header from "./components/molecules/header";
+import RecipeCard from "./components/organisms/RecipeCard";
+import { useRecipeBookContext } from "./RecipeStepsContext";
+import { useState } from "react";
+import { useRecipeEditContext } from "./IdHandlingContext";
 
 interface RecipeStep {
   id: string;
@@ -13,9 +20,40 @@ interface Recipe {
 }
 
 export default function Home() {
+  const { recipes, setRecipes } = useRecipeBookContext();
+  const router = useRouter();
+  const {idTarget, setIdTarget} = useRecipeEditContext();
+
+  const handleSelectRecipe = (id: string) => {
+    // Navigate to the edit page for the selected recipe
+    console.log("recipe with id: ", id);
+    setIdTarget(id);
+
+    router.push(`/recipes/${id}`);
+  };
+
+  const handleDeleteRecipe = (id: string) => {
+    // Logic to handle deleting a recipe
+    const newRecipes = new Map(recipes);
+    newRecipes.delete(id);
+    setRecipes(newRecipes);
+  };
+
   return (
     <>
-    <Header title="Recipe Step" homePage={true} />
+      <Header title="Recipe Step" homePage={true} />
+      <div className="container mx-auto p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {Array.from(recipes.entries()).map(([id, recipe]) => (
+            <RecipeCard
+              key={id}
+              recipe={{ ...recipe, id }}
+              onSelectRecipe={handleSelectRecipe}
+              onDeleteRecipe={handleDeleteRecipe}
+            />
+          ))}
+        </div>
+      </div>
     </>
   );
 }

@@ -7,7 +7,6 @@ export default function Create() {
         <>
         <Header title="Create Recipe" homePage={false} />
         <InputRecipeForm />
-
         </>
     );
 }

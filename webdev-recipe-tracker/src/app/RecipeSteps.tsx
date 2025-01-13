@@ -22,7 +22,6 @@ export default function RecipeSteps () {
 
 return (
     <ol className="pl-6 text-lg">
-        
         {Array.from(recipes!.entries()).map(([recipeId, recipe]) => (
             <li key={recipeId}>
                 <h3>{recipe.title}</h3>
