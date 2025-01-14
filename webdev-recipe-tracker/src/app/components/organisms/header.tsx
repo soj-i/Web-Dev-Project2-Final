@@ -21,21 +21,26 @@ interface HeaderProps {
       } else {
         router.push('/'); // or router.back() ? might lead to bugs if user
       }
-     };                   // accesses website from /add-recipe directory
+     };                   // accesses website from /recipe directory
   
     return (
       <>
-        <h1 className = 'text-6xl font-bold'>
+       <header className = "h-16 flex justify-items-start items-bottom ">
+        <h1 className = "text-6xl font-bold">
         {title}
-        
+        </h1>
         <button
-        id = 'header-btn'
+        type = "button"
+        id = "header-btn"
+        tabIndex = {0}
         onClick = {flipPage}
-        className = 'text-2xl rounded-full bg-cover bg-sky-500/50 py-2 px-4 shadow'>
+        aria-label = {homePage ? 'Add Recipe' : 'Home'}
+        className = 'text-2xl rounded-full bg-sky-500/50 py-2 px-4 shadow'>
           
           {homePage ? 'Add Recipe' : 'Home'}
         </button>
-        </h1>
+        
+        </header>
       </>
     );
   }

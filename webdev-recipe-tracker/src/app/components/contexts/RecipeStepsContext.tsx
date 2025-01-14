@@ -1,13 +1,15 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode, Dispatch, useEffect } from 'react';
 
-import {cookbook, Recipe, RecipeStep } from './cookbookSetup';
+import {cookbook, Recipe, RecipeStep } from '../molecules/cookbookSetup';
 
 
 const defaultRecipe = { 
-    title: "recipe 1",
-    steps: [{id: "step-1", value: "step 1", isCompleted: false},
-            {id: "step-2", value: "step-2", isCompleted: true}
+    title: "example recipe",
+    steps: [{id: "step-1", value: "step 1", isCompleted: true},
+            {id: "step-2", value: "step-2", isCompleted: true},
+            {id: "step-3", value: "step 3", isCompleted: false},
+            {id: "step-4", value: "step 4", isCompleted: false}
            ]
 }
 cookbook.set("recipe-1", defaultRecipe);

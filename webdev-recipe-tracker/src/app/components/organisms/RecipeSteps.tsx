@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from 'react';
-import { useRecipeBookContext } from './RecipeStepsContext';
-import { recipeStepTracker } from './cookbookSetup';
+import { useRecipeBookContext } from '../contexts/RecipeStepsContext';
+import { recipeStepTracker } from '../molecules/cookbookSetup';
 
 export default function RecipeSteps () {
   const { recipes, setRecipes } = useRecipeBookContext();
-  const [completedSteps, setCompletedSteps] = useState<{ [key: string]: boolean }>({});
 
   const handleCompleteCheck = (recipeId: string, stepId: string) => {
     const recipe = recipeStepTracker.getRecipeFromCookbook(recipeId);
@@ -16,8 +15,6 @@ export default function RecipeSteps () {
         setRecipes(updatedRecipes);
     }
 };
-
-
 
 
 return (

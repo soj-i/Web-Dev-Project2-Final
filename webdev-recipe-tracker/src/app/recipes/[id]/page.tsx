@@ -2,10 +2,10 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRecipeBookContext } from '@/app/RecipeStepsContext';
-import { recipeStepTracker, Recipe, RecipeStep } from '@/app/cookbookSetup';
-import Header from '@/app/components/molecules/header';
-import { useRecipeEditContext } from '@/app/IdHandlingContext';
+import { useRecipeBookContext } from '@/app/components/contexts/RecipeStepsContext';
+import { recipeStepTracker, Recipe, RecipeStep } from '@/app/components/molecules/cookbookSetup';
+import Header from '@/app/components/organisms/header';
+import { useRecipeEditContext } from '@/app/components/contexts/IdHandlingContext';
 
 export default function EditRecipe() {
   const router = useRouter();
@@ -68,7 +68,7 @@ export default function EditRecipe() {
 
      
       const updatedRecipe = { ...recipe, title: recipeName, steps };
-    //   recipeStepTracker.addRecipeToCookbook(updatedRecipe); // Update the cookbook
+
       setRecipes(new Map(recipes.set(currId!, updatedRecipe))); // Update the context state
       setIdTarget('');
 
@@ -83,20 +83,28 @@ export default function EditRecipe() {
   return (
     <div>
       <Header title={`Edit Recipe: ${recipe.title}`} homePage={false} />
-      <div className="p-4">
+      <div className="pl-20 pt-10">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="recipe-name">Recipe name:</label>
+            <div> {/* Recipe name + input box */}
+          <label htmlFor="recipe-name"
+          className = "text-2xl mr-4">Recipe name: </label>
           <input
             id="recipe-name-input"
             type="text"
             value={recipeName}
             onChange={(e) => setRecipeName(e.target.value)}
             required
-            className="border p-2 flex-grow mr-2 rounded"
+            className="border p-2 flex-row rounded bottom-24"
           />
-          <ol className="list-disc list-inside pl-6 text-lg">
-            {steps.map((step, index) => (
-              <li key={step.id} className="flex items-center mb-2">
+          </div>
+          {/* step text + list*/}
+          <div className="bg-gray-500/50 rounded shadow-lg w-1/2 mt-8">
+          <label htmlFor="recipe-name"
+                 className="text-xl">Steps: </label>
+          <ol className="list-disc list-inside p-10 text-lg space-y-6"> {/* list of steps */}
+            {steps.map((step, index) => ( 
+              <li 
+              key={step.id} className="flex items-center mb-2">{/* text for steps */}
                 <input
                   type="text"
                   value={step.value}
@@ -105,16 +113,20 @@ export default function EditRecipe() {
                     newSteps[index] = { ...newSteps[index], value: e.target.value };
                     setSteps(newSteps);
                   }}
-                  className="border p-2 flex-grow mr-2 rounded"
+                  className="border p-2 background w-2/6 mr-4 rounded"
                 />
                 <input
                   type="checkbox"
+                  aria-label = "Mark as complete"
+                  aria-checked={step.isCompleted}
                   checked={step.isCompleted}
                   onChange={() => handleToggleComplete(step.id)}
                   className="mr-2"
                 />
+                Mark as Complete
                 <button
-                  className="ml-4 text-red-500"
+                  className="ml-4 bg-red-500 text-white rounded px-4 py-2"
+                  aria-label = "Delete step"
                   onClick={() => handleDeleteStep(step.id)}
                 >
                   Delete
@@ -122,14 +134,17 @@ export default function EditRecipe() {
               </li>
             ))}
           </ol>
+          </div>
           <button
-            className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+            aria-label = "Add Step"
+            className="mt-4 bg-green-500 text-white px-4 py-2 rounded mr-10"
             onClick={handleAddStep}
             type="button"
           >
             Add Step
           </button>
           <button
+            aria-label = "Submit Recipe"
             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
             type="submit"
           >
