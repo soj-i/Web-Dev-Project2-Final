@@ -1,7 +1,7 @@
 
 import "./globals.css";
-import { RecipeEditContextProvider } from "./components/contexts/IdHandlingContext";
-import { RecipeStepsContextProvider } from "./components/contexts/RecipeStepsContext";
+import { RecipeEditContextProvider } from "./IdHandlingContext";
+import { RecipeStepsContextProvider } from "./RecipeStepsContext";
 
 
 export default function RootLayout({

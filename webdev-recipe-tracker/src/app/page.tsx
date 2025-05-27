@@ -2,11 +2,11 @@
 
 
 import { useRouter } from "next/navigation";
-import Header from "./components/organisms/header";
+import Header from "./components/molecules/header";
 import RecipeCard from "./components/organisms/RecipeCard";
-import { useRecipeBookContext } from "./components/contexts/RecipeStepsContext";
+import { useRecipeBookContext } from "./RecipeStepsContext";
 import { useState } from "react";
-import { useRecipeEditContext } from "./components/contexts/IdHandlingContext";
+import { useRecipeEditContext } from "./IdHandlingContext";
 
 interface RecipeStep {
   id: string;
@@ -26,7 +26,7 @@ export default function Home() {
 
   const handleSelectRecipe = (id: string) => {
     // Navigate to the edit page for the selected recipe
-
+    console.log("recipe with id: ", id);
     setIdTarget(id);
 
     router.push(`/recipes/${id}`);
@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Cookbook Recipes" homePage={true} />
+      <Header title="Recipe Step" homePage={true} />
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {Array.from(recipes.entries()).map(([id, recipe]) => (

@@ -22,13 +22,11 @@ interface RecipeCardProps {
 export default function RecipeCard({ recipe, onSelectRecipe, onDeleteRecipe }: RecipeCardProps) {
     return (
         <div className="p-6 bg-white rounded-xl shadow-lg space-y-4">
-            <h3 className="text-xl font-bold text-black"
-            aria-label = {recipe.title}>{recipe.title}</h3>
+            <h3 className="text-xl font-bold text-black">{recipe.title}</h3>
             <ul className="list-disc list-inside text-slate-500">
                 {recipe.steps.map((step) => (
-                    <li key={step.id} style={{ textDecoration: step.isCompleted ? 'line-through' : 'none' }}
-                    aria-checked = {step.isCompleted}>
-                    
+                    <li key={step.id} style={{ textDecoration: step.isCompleted ? 'line-through' : 'none' }}>
+                        {step.value}
                     </li>
                 ))}
             </ul>
@@ -36,16 +34,12 @@ export default function RecipeCard({ recipe, onSelectRecipe, onDeleteRecipe }: R
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => onSelectRecipe(recipe.id)}
-                    tabIndex = {0}
-                    aria-label = "Edit Recipe"
                 >
                     Edit Recipe
                 </button>
                 <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => onDeleteRecipe(recipe.id)}
-                    tabIndex = {0}
-                    aria-label = "Remove Recipe"
                 >
                     Remove Recipe
                 </button>

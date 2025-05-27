@@ -1,6 +1,6 @@
-import Header from "../components/organisms/header";
-import InputRecipeForm from "../components/organisms/InputRecipeForm";
-import RecipeSteps from "../components/organisms/RecipeSteps";
+import Header from "../components/molecules/header";
+import InputRecipeForm from "../InputRecipeForm";
+import RecipeSteps from "../RecipeSteps";
 
 export default function Create() {
     return (
